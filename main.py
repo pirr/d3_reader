@@ -1,4 +1,5 @@
-from lib.getter import get_data, HTMLFilter
+from lib.getter import get_data
+from lib.formatter import Article
 
 
 if __name__ == "__main__":
@@ -15,13 +16,6 @@ _________/\\\______/\\\\\\\\\\____________________________________
 ''')
     data = get_data()
     for post in data['posts']:
-        print(post['title'])
-        if post['data']['text']:
-            parser = HTMLFilter()
-            print(parser.feed(post['data']['text']))
-            print(parser.text)
-        if 'main_image_url' in post:
-            print('image_url:', post['main_image_url'])
-        print('rating:', post['rating'])
-        print('link:', post['_links'][1]['href'])    
-        print('=' * 25)
+        article = Article()
+        article.from_json(post)
+        article.show()
